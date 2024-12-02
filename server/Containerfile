@@ -1,0 +1,21 @@
+# Use a lightweight Python image
+FROM python:3.7-alpine
+
+# Install system dependencies for figlet and Python build tools
+RUN apk add --no-cache figlet python3-dev build-base 
+
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the application code
+COPY . .
+
+# Install dependencies
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Expose the application port
+EXPOSE 5000
+
+# Command to run the application
+CMD ["python3", "server.py"]

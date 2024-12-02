@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client-container
+        image: quay.io/amitos/client-app:latest
+        imagePullPolicy: Always
+        env:
+        - name: SERVER_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: my-config-map
+              key: SERVER_HOSTNAME
+        - name: SERVER_PORT 
+          valueFrom:
+            configMapKeyRef:
+              name: my-config-map
+              key: SERVER_PORT
+        - name: CLIENT_PORT 
+          valueFrom:
+            configMapKeyRef:
+              name: my-config-map
+              key: CLIENT_PORT
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  selector:
+    app: client 
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: NodePort
+
+
