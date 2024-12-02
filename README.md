@@ -100,6 +100,52 @@ This project demonstrates deploying a simple client-server application on both v
 - Logs demonstrating successful client-server communication for both VM and Kubernetes setups.
 - Screenshots of browser-based client interaction and Kubernetes dashboard.
 
+![alt text](frontend.png)
+
+---
+## **Deploying Locally**
+
+To deploy the application locally on your Kubernetes cluster, follow these steps:
+
+1. Navigate to the `manifests` directory:
+    ```bash
+    cd manifests
+    ```
+2. Apply the Kubernetes manifests:
+    ```bash
+    kubectl apply -f manifests/config-map.yaml
+    kubectl apply -f manifests/client-deployment.yaml 
+    kubectl apply -f manifests/server-deployment.yaml  
+    ```
+3. To view the ip of your application:
+    ```bash
+    kubectl get nodes -o wide
+    ```
+    * Locate the EXTERNAL-IP column in the output.
+4. Access the client in your browser::
+    ```
+    http://<EXTERNAL IP>:30001
+    ```
+
+## **Testing Locally**
+You can verify the application using a test job:
+1. Apply the test job manifest:
+    ```bash
+    kubectl apply -f manifests/test-job.yaml
+    ```
+2. List all pods to find the test job pod name:
+    ```bash
+    kubectl get pods
+    ```
+    * Look for a pod with the name test-job-<random-string>.
+3. Check the logs of the test job pod:
+    ```bash
+    kubectl logs test-job-<random-string>
+    ```
+    * Replace <random-string> with the actual suffix of the test job pod.
+4. The logs will indicate whether the test passed.
+
+
 ---
 
 ## **Summary**
