@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-job
+spec:
+  template:
+    metadata:
+      name: client-test-job
+    spec:
+      containers:
+      - name: test-container
+        image: curlimages/curl:latest
+        command: ["sh", "-c"]
+        args:
+          - |
+            echo "Testing the client and server interaction...";
+            RESPONSE=$(curl -s -X GET "http://client-service:5001/convert?sentence=Hello");
+            if echo "$RESPONSE" | grep "ASCII Art:"; then
+              echo "Test passed!";
+            else
+              echo "Test failed! Response: $RESPONSE" && exit 1;
+            fi;
+      restartPolicy: Never
+  backoffLimit: 3
