@@ -74,10 +74,11 @@ This project demonstrates deploying a simple client-server application on both v
    - Set up a Minikube cluster.
 3. **Server Deployment**:
    - Created a deployment for the server.
+   - Configured the server using a `ConfigMap`.
    - Exposed it as a `ClusterIP` service.
 4. **Client Deployment**:
    - Created a deployment for the client.
-   - Configured the client using a `ConfigMap` to communicate with the server.
+   - Configured the client using a `ConfigMap`.
    - Exposed the client via a `NodePort` service.
 5. **Scaling**:
    - Increased the server replica count and verified load distribution.
@@ -88,8 +89,6 @@ This project demonstrates deploying a simple client-server application on both v
 
 ## **Deliverables**
 
-### **Source Code**
-- [GitHub Repository](#)
 
 ### **Configuration Files**
 - `Dockerfiles` for client and server.
